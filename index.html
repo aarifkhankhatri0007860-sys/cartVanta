@@ -66,7 +66,7 @@ let cart=[];let currentPage=1;let activeCategory='';let isLoading=false;let hasM
 try{cart=JSON.parse(localStorage.getItem('cartvanta_cart')||'[]');if(!Array.isArray(cart))cart=[];}catch(e){cart=[];}
 function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function saveCart(){localStorage.setItem('cartvanta_cart',JSON.stringify(cart));renderCart();}
-function addToCart(product){if(window.cvTrack)window.cvTrack('add_to_cart',{currency:'USD',value:Number(product.price||0),items:[{item_id:product.sku||product.id,item_name:product.name,price:Number(product.price||0),quantity:1}]});const old=cart.find(x=>x.id===product.id&&x.warehouse===product.warehouse);if(old)old.qty=Math.min(old.qty+1,99);else cart.push({...product,qty:1});saveCart();cartDialog.showModal();}
+function addToCart(product){if(window.cvTrack)window.cvTrack('add_to_cart',{items:[{item_id:product.sku||product.id,item_name:product.name,quantity:1}]});const old=cart.find(x=>x.id===product.id&&x.warehouse===product.warehouse);if(old)old.qty=Math.min(old.qty+1,99);else cart.push({...product,qty:1});saveCart();cartDialog.showModal();}
 function renderCart(){
  document.getElementById('cartCount').textContent=cart.reduce((n,p)=>n+p.qty,0);
  const box=document.getElementById('cartItems');
@@ -86,7 +86,7 @@ async function loadProducts(append=false){
   const data=await response.json();
   if(!response.ok)throw new Error(data.error||'Supplier catalogue request failed.');
   const products=(data.products||[]).filter(p=>Number(p.stock)>0&&p.stockVerified===true);
-  if(window.cvTrack&&products.length)window.cvTrack('view_item_list',{item_list_id:activeCategory||'all_products',item_list_name:activeCategory||'All products',items:products.map((p,index)=>({item_id:p.sku||p.id,item_name:p.name,index,price:Number(p.price||0)}))});
+  if(window.cvTrack&&products.length)window.cvTrack('view_item_list',{item_list_id:activeCategory||'all_products',item_list_name:activeCategory||'All products',items:products.map((p,index)=>({item_id:p.sku||p.id,item_name:p.name,index}))});
   if(!append&&!products.length){statusBox.textContent='No in-stock products were found on this supplier page. You can scan the next catalogue page or change category/destination. Unavailable products are never shown as in stock.';hasMore=Boolean(data.hasMore);document.getElementById('loadMore').hidden=!hasMore;return;}
   if(products.length){
    const cards=products.map(p=>'<article class="product fade-up"><a href="/product.html?id='+encodeURIComponent(p.id)+'"><img src="'+esc(p.image)+'" alt="'+esc(p.name)+'" loading="lazy" decoding="async"></a><div class="pbody"><a class="pname" href="/product.html?id='+encodeURIComponent(p.id)+'">'+esc(p.name)+'</a><div class="meta">SKU: '+esc(p.sku)+' · Warehouse: '+esc(p.warehouse)+' · Stock: '+esc(p.stock)+'</div><div class="price">Price on request</div><div class="meta">Final price and delivery quote are confirmed before ordering.</div><button class="addbtn" data-add="'+esc(p.id)+'" data-sku="'+esc(p.sku)+'">Add to bag +</button></div></article>').join('');
