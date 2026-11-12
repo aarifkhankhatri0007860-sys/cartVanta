@@ -10,7 +10,7 @@
 :root{--ink:#151515;--muted:#777;--paper:#f7f6f2;--line:#e8e6e0;--lime:#d9ff65;--white:#fff}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,input,select{font:inherit}button{cursor:pointer}
 .announce{background:#171717;color:#fff;text-align:center;padding:10px 14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
-header{background:#f7f6f2eF;backdrop-filter:blur(14px);position:sticky;top:0;z-index:20;border-bottom:1px solid #e8e6e0}.nav{max-width:1380px;margin:auto;height:76px;padding:0 5vw;display:flex;align-items:center;gap:30px}.logo{font-size:25px;font-weight:900;letter-spacing:-1.6px}.logo span{font-weight:400}.navlinks{display:flex;gap:28px;margin:auto;font-size:12px;text-transform:uppercase;letter-spacing:.1em}.navlinks a:hover{opacity:.55}.navright{display:flex;gap:10px;align-items:center}.navbtn{border:1px solid var(--ink);background:transparent;padding:11px 16px;border-radius:30px;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+header{background:#f7f6f2eF;backdrop-filter:blur(14px);position:sticky;top:0;z-index:20;border-bottom:1px solid #e8e6e0}.nav{max-width:1380px;margin:auto;height:76px;padding:0 5vw;display:flex;align-items:center;gap:30px}.logo{font-size:25px;font-weight:900;letter-spacing:-1.6px}.logo span{font-weight:400}.navlinks{display:flex;gap:28px;margin:auto;font-size:12px;text-transform:uppercase;letter-spacing:.1em}.navlinks a:hover{opacity:.55}.navright{display:flex;gap:10px;align-items:center}.navbtn{border:1px solid var(--ink);background:transparent;padding:11px 16px;border-radius:30px;font-size:11px;text-transform:uppercase;letter-spacing:.08em}.cartbtn{border:0;background:var(--lime);color:#111;padding:12px 16px;border-radius:30px;font-size:11px;font-weight:800;letter-spacing:.08em}.cartbtn span{display:inline-grid;place-items:center;background:#111;color:#fff;width:19px;height:19px;border-radius:50%;margin-left:5px}.addbtn{width:100%;margin-top:13px;border:0;background:#171717;color:#fff;padding:13px 10px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.addbtn:disabled{opacity:.45;cursor:not-allowed}.cartdialog{width:min(520px,calc(100% - 24px));max-height:85vh;border:0;padding:0;background:#f7f6f2;color:#171717;box-shadow:0 25px 90px #0005}.cartdialog::backdrop{background:#0009;backdrop-filter:blur(3px)}.carthead{display:flex;justify-content:space-between;align-items:center;padding:22px;border-bottom:1px solid var(--line)}.carthead h3{margin:0;font-size:22px;letter-spacing:-.04em}.cartclose{border:1px solid #ddd;background:transparent;border-radius:50%;width:34px;height:34px}.cartitems{padding:16px 22px;max-height:45vh;overflow:auto}.cartrow{display:grid;grid-template-columns:64px 1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:center}.cartrow img{width:64px;height:64px;object-fit:contain;background:#eee}.cartrow b{font-size:12px;line-height:1.4}.cartrow small{display:block;color:#777;font-size:10px;margin-top:5px}.qty{display:flex;align-items:center;gap:8px;margin-top:8px}.qty button{border:1px solid #ddd;background:white;width:25px;height:25px}.remove{border:0;background:none;color:#888;font-size:10px;text-decoration:underline;margin-top:5px}.cartfoot{padding:18px 22px;border-top:1px solid var(--line)}.cartfoot p{font-size:11px;line-height:1.6;color:#666}.cartempty{padding:40px 20px;text-align:center;color:#777;font-size:13px}
 .hero{min-height:610px;background:#242424;position:relative;overflow:hidden;color:#fff;display:flex;align-items:center}.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#111d 0%,#1119 45%,#1112 100%),url('https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=2000&q=85') center/cover}.hero-inner{position:relative;width:100%;max-width:1380px;margin:auto;padding:90px 8vw}.kicker{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--lime);font-weight:700}.hero h1{font-size:clamp(54px,8vw,112px);line-height:.91;letter-spacing:-.075em;max-width:780px;margin:25px 0}.hero p{font-size:15px;line-height:1.8;color:#e5e5e5;max-width:450px}.pill{display:inline-flex;margin-top:25px;background:var(--lime);color:#111;padding:16px 23px;border-radius:40px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.hero-note{position:absolute;right:7vw;bottom:36px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#ffffffb5}
 .marquee{background:var(--lime);padding:15px 10px;overflow:hidden;white-space:nowrap;font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
 .section{max-width:1380px;margin:auto;padding:88px 5vw}.section-head{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:32px}.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#777}.section h2{font-size:clamp(34px,5vw,58px);letter-spacing:-.065em;line-height:1;margin:12px 0 0}.section-sub{max-width:360px;color:var(--muted);font-size:13px;line-height:1.7}
@@ -20,13 +20,13 @@ header{background:#f7f6f2eF;backdrop-filter:blur(14px);position:sticky;top:0;z-i
 .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:35px}.value{background:var(--paper);padding:25px}.value b{font-size:13px}.value p{font-size:12px;line-height:1.7;color:var(--muted)}
 footer{background:#111;color:#fff}.foot{max-width:1380px;margin:auto;padding:55px 5vw;display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}.foot p,.foot a{font-size:11px;color:#aaa;line-height:2}.foot h4{font-size:10px;letter-spacing:.16em;text-transform:uppercase}.footlinks{display:flex;flex-direction:column}.copyright{border-top:1px solid #333;padding:18px 5vw;color:#777;font-size:10px;text-align:center}
 @media(max-width:900px){.categories{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.story-inner{grid-template-columns:1fr}.story-image{height:280px}.foot{grid-template-columns:1fr 1fr}.navlinks{gap:14px}}
-@media(max-width:560px){.nav{height:64px;padding:0 18px}.navlinks{display:none}.logo{font-size:22px}.navbtn{padding:9px 12px}.hero{min-height:570px}.hero-inner{padding:70px 22px}.hero h1{font-size:59px}.hero-note{display:none}.section{padding:62px 18px}.section-head{display:block}.section-sub{margin-top:14px}.categories{gap:8px}.cat{min-height:190px;padding:14px}.cat span{font-size:17px}.grid{gap:9px}.product img{height:155px;padding:8px}.pbody{padding:11px}.pname{font-size:11px}.price{font-size:15px}.tools input,.tools select{min-width:100%;}.tools button{width:100%}.story-inner{padding:65px 22px;gap:28px}.story-image{height:220px}.values{grid-template-columns:1fr}.foot{grid-template-columns:1fr;padding:42px 22px}}
+@media(max-width:560px){.nav{height:64px;padding:0 12px}.navright{gap:6px}.cartbtn{padding:9px 10px}.navbtn{padding:9px 10px}.navlinks{display:none}.logo{font-size:22px}.navbtn{padding:9px 12px}.hero{min-height:570px}.hero-inner{padding:70px 22px}.hero h1{font-size:59px}.hero-note{display:none}.section{padding:62px 18px}.section-head{display:block}.section-sub{margin-top:14px}.categories{gap:8px}.cat{min-height:190px;padding:14px}.cat span{font-size:17px}.grid{gap:9px}.product img{height:155px;padding:8px}.pbody{padding:11px}.pname{font-size:11px}.price{font-size:15px}.tools input,.tools select{min-width:100%;}.tools button{width:100%}.story-inner{padding:65px 22px;gap:28px}.story-image{height:220px}.values{grid-template-columns:1fr}.foot{grid-template-columns:1fr;padding:42px 22px}}
 </style>
 </head>
 <body>
 <div class="announce">A considered collection for everyday living · CartVanta</div>
-<header><nav class="nav"><a class="logo" href="/">cart<span>vanta.</span></a><div class="navlinks"><a href="#categories">Collections</a><a href="#shop">Shop</a><a href="#story">Our approach</a></div><div class="navright"><a class="navbtn" href="#shop">Explore shop ↗</a></div></nav></header>
-<section class="hero"><div class="hero-inner"><div class="kicker">Everyday, thoughtfully found</div><h1>Find your<br>everyday.</h1><p>Useful objects. Smart little upgrades. A considered mix of finds for your home, your routine and wherever life takes you.</p><a class="pill" href="#shop">Discover the collection&nbsp; ↗</a></div><div class="hero-note">Curated for the way you live · Est. 2026</div></section>
+<header><nav class="nav"><a class="logo" href="/">cart<span>vanta.</span></a><div class="navlinks"><a href="#categories">Collections</a><a href="#shop">Shop</a><a href="#story">Our approach</a></div><div class="navright"><a class="navbtn" href="#shop">Explore shop ↗</a><button class="cartbtn" id="openCart" type="button">Bag <span id="cartCount">0</span></button></div></nav></header>
+<dialog class="cartdialog" id="cartDialog"><div class="carthead"><h3>Your selection</h3><button class="cartclose" id="closeCart" aria-label="Close cart">×</button></div><div class="cartitems" id="cartItems"></div><div class="cartfoot"><p>This is a saved selection only. Supplier shipping, final selling price, taxes and payment checkout are not yet enabled. No payment will be taken here.</p><a class="pill" style="margin-top:8px" href="mailto:fundvexxasupport@gmail.com">Ask about these items ↗</a></div></dialog>\n<section class="hero"><div class="hero-inner"><div class="kicker">Everyday, thoughtfully found</div><h1>Find your<br>everyday.</h1><p>Useful objects. Smart little upgrades. A considered mix of finds for your home, your routine and wherever life takes you.</p><a class="pill" href="#shop">Discover the collection&nbsp; ↗</a></div><div class="hero-note">Curated for the way you live · Est. 2026</div></section>
 <div class="marquee">GOOD DESIGN · USEFUL FINDS · EVERYDAY ESSENTIALS · GOOD DESIGN · USEFUL FINDS · EVERYDAY ESSENTIALS ·</div>
 <main>
 <section class="section" id="categories"><div class="section-head"><div><div class="eyebrow">Browse by interest</div><h2>Made for your<br>kind of day.</h2></div><p class="section-sub">Explore the categories we’re building around practical, thoughtful products. Product availability is checked before listings are opened for purchase.</p></div>
@@ -44,7 +44,95 @@ footer{background:#111;color:#fff}.foot{max-width:1380px;margin:auto;padding:55p
 </main>
 <footer><div class="foot"><div><a class="logo" href="/">cart<span>vanta.</span></a><p>Useful finds for everyday living.<br>Support: fundvexxasupport@gmail.com<br>WhatsApp: +91 72909 77231</p></div><div><h4>Explore</h4><div class="footlinks"><a href="#categories">Collections</a><a href="#shop">Shop</a><a href="#story">Our approach</a></div></div><div><h4>Information</h4><div class="footlinks"><a href="/privacy.html">Privacy policy</a><a href="/terms.html">Terms & conditions</a><a href="/shipping.html">Shipping policy</a><a href="/refund.html">Cancellation & refund</a></div></div></div><div class="copyright">© <span id="year"></span> CartVanta. All rights reserved.</div></footer>
 <script>
-const statusBox=document.getElementById('status'),grid=document.getElementById('productsGrid');
+const statusBox=document.getElementById('status'),grid=document.getElementById('productsGrid');\nconst cartDialog=document.getElementById('cartDialog');let cart=[];try{cart=JSON.parse(localStorage.getItem('cartvanta_cart')||'[]');if(!Array.isArray(cart))cart=[];}catch(_){cart=[];}\nfunction saveCart(){localStorage.setItem('cartvanta_cart',JSON.stringify(cart));renderCart();}\nfunction addToCart(p){const found=cart.find(x=>x.id===p.id&&x.warehouse===p.warehouse);if(found)found.qty=Math.min(found.qty+1,99);else cart.push({...p,qty:1});saveCart();document.getElementById('openCart').textContent='Bag';document.getElementById('cartCount').textContent=cart.reduce((n,x)=>n+x.qty,0);cartDialog.showModal();}\nfunction renderCart(){const count=cart.reduce((n,x)=>n+x.qty,0);document.getElementById('cartCount').textContent=count;const el=document.getElementById('cartItems');if(!cart.length){el.innerHTML='<div class="cartempty">Your bag is empty.<br>Explore the collection to save a product.</div>';return;}el.innerHTML=cart.map((p,i)=>'<div class="cartrow"><img src="'+esc(p.image)+'" alt=""><div><b>'+esc(p.name)+'</b><small>Supplier cost: 
+document.getElementById('year').textContent=new Date().getFullYear();
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function loadProducts(){
+ const keyword=document.getElementById('keyword').value.trim(),market=document.getElementById('market').value;
+ statusBox.textContent='Checking supplier catalogue…';grid.innerHTML='';
+ try{
+  const qs=new URLSearchParams({market,keyword}),r=await fetch('/api/cj-products?'+qs.toString()),data=await r.json();
+  if(!r.ok)throw new Error(data.error||'Supplier catalogue is temporarily unavailable.');
+  const items=(data.products||[]).filter(p=>Number(p.stock)>0);
+  if(!items.length){statusBox.textContent='No products with confirmed positive stock were returned for this search and warehouse. Try another category or warehouse. We will not show unavailable items as purchasable.';return;}
+  statusBox.textContent='Showing '+items.length+' supplier listings with positive stock data. Shipping and final retail pricing still need confirmation before orders can be enabled.';
+  grid.innerHTML=items.map(p=>'<article class="product">'+(p.image?'<img src="'+esc(p.image)+'" alt="'+esc(p.name)+'" loading="lazy">':'')+'<div class="pbody"><div class="pname">'+esc(p.name)+'</div><div class="meta">SKU: '+esc(p.sku||'Supplier listing')+' · Verified CJ stock: '+esc(p.stock)+'</div><div class="price">
+ }catch(e){statusBox.textContent=e.message+' Please check the CJ_API_KEY environment variable in Vercel. The key is never exposed in this page.';}
+}
+document.getElementById('searchBtn').addEventListener('click',loadProducts);
+document.getElementById('keyword').addEventListener('keydown',e=>{if(e.key==='Enter')loadProducts()});
+document.querySelectorAll('[data-keyword]').forEach(a=>a.addEventListener('click',()=>{document.getElementById('keyword').value=a.dataset.keyword;setTimeout(loadProducts,0)}));
+loadProducts();
+</script>
+</body></html>+esc(p.price)+' · '+esc(p.warehouse)+' warehouse</small><div class="qty"><button data-cart-action="minus" data-i="'+i+'">−</button><span>'+p.qty+'</span><button data-cart-action="plus" data-i="'+i+'">+</button></div><button class="remove" data-cart-action="remove" data-i="'+i+'">Remove</button></div><b>
+document.getElementById('year').textContent=new Date().getFullYear();
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function loadProducts(){
+ const keyword=document.getElementById('keyword').value.trim(),market=document.getElementById('market').value;
+ statusBox.textContent='Checking supplier catalogue…';grid.innerHTML='';
+ try{
+  const qs=new URLSearchParams({market,keyword}),r=await fetch('/api/cj-products?'+qs.toString()),data=await r.json();
+  if(!r.ok)throw new Error(data.error||'Supplier catalogue is temporarily unavailable.');
+  const items=(data.products||[]).filter(p=>Number(p.stock)>0);
+  if(!items.length){statusBox.textContent='No products with confirmed positive stock were returned for this search and warehouse. Try another category or warehouse. We will not show unavailable items as purchasable.';return;}
+  statusBox.textContent='Showing '+items.length+' supplier listings with positive stock data. Shipping and final retail pricing still need confirmation before orders can be enabled.';
+  grid.innerHTML=items.map(p=>'<article class="product">'+(p.image?'<img src="'+esc(p.image)+'" alt="'+esc(p.name)+'" loading="lazy">':'')+'<div class="pbody"><div class="pname">'+esc(p.name)+'</div><div class="meta">SKU: '+esc(p.sku||'Supplier listing')+' · Supplier stock: '+esc(p.stock)+'</div><div class="price">$'+esc(p.price)+'</div></div></article>').join('');
+ }catch(e){statusBox.textContent=e.message+' Please check the CJ_API_KEY environment variable in Vercel. The key is never exposed in this page.';}
+}
+document.getElementById('searchBtn').addEventListener('click',loadProducts);
+document.getElementById('keyword').addEventListener('keydown',e=>{if(e.key==='Enter')loadProducts()});
+document.querySelectorAll('[data-keyword]').forEach(a=>a.addEventListener('click',()=>{document.getElementById('keyword').value=a.dataset.keyword;setTimeout(loadProducts,0)}));
+loadProducts();
+</script>
+</body></html>+(Number(p.price)*p.qty).toFixed(2)+'</b></div>').join('');}\ndocument.getElementById('openCart').addEventListener('click',()=>cartDialog.showModal());document.getElementById('closeCart').addEventListener('click',()=>cartDialog.close());document.getElementById('cartItems').addEventListener('click',e=>{const b=e.target.closest('[data-cart-action]');if(!b)return;const i=Number(b.dataset.i),a=b.dataset.cartAction;if(!cart[i])return;if(a==='plus')cart[i].qty=Math.min(cart[i].qty+1,99);if(a==='minus')cart[i].qty-=1;if(a==='remove'||cart[i].qty<=0)cart.splice(i,1);saveCart();});renderCart();
+document.getElementById('year').textContent=new Date().getFullYear();
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function loadProducts(){
+ const keyword=document.getElementById('keyword').value.trim(),market=document.getElementById('market').value;
+ statusBox.textContent='Checking supplier catalogue…';grid.innerHTML='';
+ try{
+  const qs=new URLSearchParams({market,keyword}),r=await fetch('/api/cj-products?'+qs.toString()),data=await r.json();
+  if(!r.ok)throw new Error(data.error||'Supplier catalogue is temporarily unavailable.');
+  const items=(data.products||[]).filter(p=>Number(p.stock)>0);
+  if(!items.length){statusBox.textContent='No products with confirmed positive stock were returned for this search and warehouse. Try another category or warehouse. We will not show unavailable items as purchasable.';return;}
+  statusBox.textContent='Showing '+items.length+' supplier listings with positive stock data. Shipping and final retail pricing still need confirmation before orders can be enabled.';
+  grid.innerHTML=items.map(p=>'<article class="product">'+(p.image?'<img src="'+esc(p.image)+'" alt="'+esc(p.name)+'" loading="lazy">':'')+'<div class="pbody"><div class="pname">'+esc(p.name)+'</div><div class="meta">SKU: '+esc(p.sku||'Supplier listing')+' · Supplier stock: '+esc(p.stock)+'</div><div class="price">$'+esc(p.price)+'</div></div></article>').join('');
+ }catch(e){statusBox.textContent=e.message+' Please check the CJ_API_KEY environment variable in Vercel. The key is never exposed in this page.';}
+}
+document.getElementById('searchBtn').addEventListener('click',loadProducts);
+document.getElementById('keyword').addEventListener('keydown',e=>{if(e.key==='Enter')loadProducts()});
+document.querySelectorAll('[data-keyword]').forEach(a=>a.addEventListener('click',()=>{document.getElementById('keyword').value=a.dataset.keyword;setTimeout(loadProducts,0)}));
+loadProducts();
+</script>
+</body></html>+esc(p.price)+'</div><div class="meta">Supplier cost · USD (not retail price)</div><button class="addbtn" data-add-product="'+esc(p.id)+'">Add to selection +</button></div></article>').join('');grid.querySelectorAll('[data-add-product]').forEach(btn=>btn.addEventListener('click',()=>{const p=items.find(x=>String(x.id)===btn.dataset.addProduct);if(p)addToCart(p);}));
+ }catch(e){statusBox.textContent=e.message+' Please check the CJ_API_KEY environment variable in Vercel. The key is never exposed in this page.';}
+}
+document.getElementById('searchBtn').addEventListener('click',loadProducts);
+document.getElementById('keyword').addEventListener('keydown',e=>{if(e.key==='Enter')loadProducts()});
+document.querySelectorAll('[data-keyword]').forEach(a=>a.addEventListener('click',()=>{document.getElementById('keyword').value=a.dataset.keyword;setTimeout(loadProducts,0)}));
+loadProducts();
+</script>
+</body></html>+esc(p.price)+' · '+esc(p.warehouse)+' warehouse</small><div class="qty"><button data-cart-action="minus" data-i="'+i+'">−</button><span>'+p.qty+'</span><button data-cart-action="plus" data-i="'+i+'">+</button></div><button class="remove" data-cart-action="remove" data-i="'+i+'">Remove</button></div><b>
+document.getElementById('year').textContent=new Date().getFullYear();
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function loadProducts(){
+ const keyword=document.getElementById('keyword').value.trim(),market=document.getElementById('market').value;
+ statusBox.textContent='Checking supplier catalogue…';grid.innerHTML='';
+ try{
+  const qs=new URLSearchParams({market,keyword}),r=await fetch('/api/cj-products?'+qs.toString()),data=await r.json();
+  if(!r.ok)throw new Error(data.error||'Supplier catalogue is temporarily unavailable.');
+  const items=(data.products||[]).filter(p=>Number(p.stock)>0);
+  if(!items.length){statusBox.textContent='No products with confirmed positive stock were returned for this search and warehouse. Try another category or warehouse. We will not show unavailable items as purchasable.';return;}
+  statusBox.textContent='Showing '+items.length+' supplier listings with positive stock data. Shipping and final retail pricing still need confirmation before orders can be enabled.';
+  grid.innerHTML=items.map(p=>'<article class="product">'+(p.image?'<img src="'+esc(p.image)+'" alt="'+esc(p.name)+'" loading="lazy">':'')+'<div class="pbody"><div class="pname">'+esc(p.name)+'</div><div class="meta">SKU: '+esc(p.sku||'Supplier listing')+' · Supplier stock: '+esc(p.stock)+'</div><div class="price">$'+esc(p.price)+'</div></div></article>').join('');
+ }catch(e){statusBox.textContent=e.message+' Please check the CJ_API_KEY environment variable in Vercel. The key is never exposed in this page.';}
+}
+document.getElementById('searchBtn').addEventListener('click',loadProducts);
+document.getElementById('keyword').addEventListener('keydown',e=>{if(e.key==='Enter')loadProducts()});
+document.querySelectorAll('[data-keyword]').forEach(a=>a.addEventListener('click',()=>{document.getElementById('keyword').value=a.dataset.keyword;setTimeout(loadProducts,0)}));
+loadProducts();
+</script>
+</body></html>+(Number(p.price)*p.qty).toFixed(2)+'</b></div>').join('');}\ndocument.getElementById('openCart').addEventListener('click',()=>cartDialog.showModal());document.getElementById('closeCart').addEventListener('click',()=>cartDialog.close());document.getElementById('cartItems').addEventListener('click',e=>{const b=e.target.closest('[data-cart-action]');if(!b)return;const i=Number(b.dataset.i),a=b.dataset.cartAction;if(!cart[i])return;if(a==='plus')cart[i].qty=Math.min(cart[i].qty+1,99);if(a==='minus')cart[i].qty-=1;if(a==='remove'||cart[i].qty<=0)cart.splice(i,1);saveCart();});renderCart();
 document.getElementById('year').textContent=new Date().getFullYear();
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 async function loadProducts(){
