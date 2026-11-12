@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
     const page = Math.min(1000, Math.max(1, Number.parseInt(req.query.page || '1', 10) || 1));
     const params = new URLSearchParams({
       page: String(page),
-      size: '100',
+      size: '24',
       countryCode: market,
       startWarehouseInventory: '1',
       verifiedWarehouse: '1'
@@ -119,7 +119,7 @@ module.exports = async (req, res) => {
         realtimeSkuInventoryChecked: true,
         restrictedNameFilter: true,
         maxStockChecksPerRequest: 24,
-        pageSize: 100,
+        pageSize: 24,
         currentPage: page
       },
       cjMessage: json.message || 'Success',
