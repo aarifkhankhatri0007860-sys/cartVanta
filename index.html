@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101a35">
+<meta name="description" content="CartVanta — useful finds for everyday living. Explore products sourced through our supplier network.">
+<title>CartVanta — Discover Better Everyday</title>
+<style>
+:root{--navy:#101a35;--ink:#17213b;--muted:#68738a;--blue:#4169e1;--cyan:#70d6d1;--paper:#f6f8fc;--line:#e6eaf2;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:var(--paper)}
+a{color:inherit;text-decoration:none}button,input,select{font:inherit}.top{background:var(--navy);color:#dce5ff;text-align:center;padding:9px 14px;font-size:12px;letter-spacing:.04em}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}.nav{max-width:1200px;margin:auto;padding:17px 22px;display:flex;align-items:center;gap:26px}.brand{font-weight:900;font-size:24px;letter-spacing:-1px;color:var(--navy)}.brand span{color:var(--blue)}.links{display:flex;gap:22px;margin-left:auto;color:#59647a;font-size:14px}.cart{border:1px solid var(--line);background:#fff;padding:10px 15px;border-radius:999px;font-weight:700}
+.hero{background:radial-gradient(circle at 80% 25%,#4269e5 0,transparent 34%),linear-gradient(120deg,#101a35,#1c315f);color:white;overflow:hidden}.hero-in{max-width:1200px;margin:auto;padding:78px 22px 74px;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:30px}.eyebrow{color:#9de5df;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:800}.hero h1{font-size:clamp(42px,6vw,68px);line-height:1.02;letter-spacing:-.055em;margin:18px 0}.hero p{color:#c7d2eb;max-width:530px;line-height:1.7}.hero-art{min-height:260px;border:1px solid #ffffff2b;border-radius:28px;background:linear-gradient(145deg,#ffffff20,#ffffff08);display:grid;place-items:center;box-shadow:0 30px 80px #07122b66}.orb{width:190px;height:190px;border-radius:50%;background:linear-gradient(135deg,#9cebe2,#7895ff);box-shadow:0 0 90px #83d9df66;display:grid;place-items:center;color:#13264d;font-size:58px;font-weight:900}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:13px 20px;background:var(--cyan);color:#10213d;font-weight:800;cursor:pointer;margin-top:14px}.btn.secondary{background:#fff;color:var(--navy);border:1px solid var(--line)}.wrap{max-width:1200px;margin:auto;padding:54px 22px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:22px}.section-head h2{margin:0;font-size:30px;letter-spacing:-.04em}.section-head p{margin:7px 0 0;color:var(--muted);font-size:14px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.filters input,.filters select{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;min-width:180px;outline:none}.filters input{flex:1}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}.product{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.2s}.product:hover{transform:translateY(-3px);box-shadow:0 15px 35px #15254a12}.product img{width:100%;height:205px;object-fit:contain;background:#f2f5fa;padding:12px}.pbody{padding:15px}.pname{font-weight:700;line-height:1.35;min-height:42px}.meta{font-size:12px;color:var(--muted);margin:8px 0}.price{font-size:18px;font-weight:900}.pfoot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}.smallbtn{border:0;border-radius:9px;background:var(--navy);color:white;padding:9px 12px;cursor:pointer;font-size:12px;font-weight:700}
+.status{border:1px dashed #cbd4e5;border-radius:16px;padding:22px;color:var(--muted);background:#fff;line-height:1.6}.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.trust article{background:white;border:1px solid var(--line);border-radius:16px;padding:20px}.trust b{display:block;margin-bottom:7px}.trust p{color:var(--muted);font-size:13px;line-height:1.6;margin:0}
+footer{background:var(--navy);color:#d7e0f4}.foot{max-width:1200px;margin:auto;padding:38px 22px;display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}.foot small{color:#9daac5}.foot a{color:#d7e0f4;margin-right:16px;font-size:13px}
+@media(max-width:850px){.hero-in{grid-template-columns:1fr;padding:55px 20px}.hero-art{min-height:200px}.grid{grid-template-columns:repeat(2,1fr)}.links{display:none}.nav{padding:14px 18px}.trust{grid-template-columns:1fr}}
+@media(max-width:480px){.grid{grid-template-columns:1fr 1fr;gap:10px}.product img{height:145px}.pbody{padding:11px}.pname{font-size:13px}.price{font-size:15px}.smallbtn{padding:8px}.wrap{padding:38px 14px}.section-head h2{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="top">THOUGHTFUL FINDS • SIMPLE SHOPPING • CARTVANTA</div>
+<header><nav class="nav"><a class="brand" href="/">Cart<span>Vanta</span></a><div class="links"><a href="#products">Shop</a><a href="#about">About</a><a href="/privacy.html">Privacy</a></div><button class="cart" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Explore products</button></nav></header>
+<section class="hero"><div class="hero-in"><div><div class="eyebrow">Discover better everyday</div><h1>Little finds.<br>Big everyday wins.</h1><p>Explore practical products for home, travel, tech and everyday life. We are building a carefully selected catalogue with supplier availability checked before launch.</p><a class="btn" href="#products">Explore collection&nbsp; →</a></div><div class="hero-art"><div class="orb">CV</div></div></div></section>
+<main>
+<section class="wrap" id="products"><div class="section-head"><div><div class="eyebrow" style="color:#4169e1">Supplier catalogue</div><h2>Explore products</h2><p>Live catalogue results from CJdropshipping when API access is configured.</p></div></div>
+<div class="filters"><input id="keyword" placeholder="Search products (e.g. kitchen, organizer, phone)" aria-label="Search products"><select id="market" aria-label="Warehouse"><option value="US">US warehouse</option><option value="CN">China warehouse</option></select><button class="btn" style="margin:0" id="searchBtn">Search</button></div>
+<div id="status" class="status">The live supplier catalogue will appear here after the CJ API key is added to Vercel Environment Variables. No sample products or invented prices are shown.</div><div class="grid" id="productsGrid"></div>
+</section>
+<section class="wrap" id="about"><div class="section-head"><div><h2>Shopping with clarity</h2><p>We verify availability, shipping and product details before accepting live orders.</p></div></div><div class="trust"><article><b>Supplier-aware selection</b><p>Products are intended to be checked against supplier stock and destination availability.</p></article><article><b>Clear product information</b><p>We aim to show accurate product details, pricing and delivery information before checkout.</p></article><article><b>Support when you need it</b><p>For questions, contact our team at fundvexxasupport@gmail.com.</p></article></div></section>
+</main>
+<footer><div class="foot"><div><div class="brand" style="color:white">Cart<span>Vanta</span></div><small>Everyday discoveries, thoughtfully selected.</small></div><div><a href="/privacy.html">Privacy Policy</a><a href="mailto:fundvexxasupport@gmail.com">Contact</a><small style="display:block;margin-top:14px">© <span id="year"></span> CartVanta</small></div></div></footer>
+<script>
+const statusBox=document.getElementById('status'), grid=document.getElementById('productsGrid');
+document.getElementById('year').textContent=new Date().getFullYear();
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function loadProducts(){
+  const keyword=document.getElementById('keyword').value.trim(), market=document.getElementById('market').value;
+  statusBox.textContent='Checking supplier catalogue…';grid.innerHTML='';
+  try{
+    const qs=new URLSearchParams({market,keyword});
+    const r=await fetch('/api/cj-products?'+qs.toString());
+    const data=await r.json();
+    if(!r.ok) throw new Error(data.error||'Supplier catalogue is not ready.');
+    const items=data.products||[];
+    if(!items.length){statusBox.textContent='CJ connected, but no matching products were returned for this search and warehouse. Try another keyword or warehouse.';return;}
+    statusBox.textContent='Showing '+items.length+' supplier results. Prices are supplier-listed USD prices and do not include final shipping, taxes or your retail margin.';
+    grid.innerHTML=items.map(p=>'<article class="product">'+(p.image?'<img src="'+esc(p.image)+'" alt="'+esc(p.name)+'" loading="lazy">':'<div style="height:205px;background:#f2f5fa"></div>')+'<div class="pbody"><div class="pname">'+esc(p.name)+'</div><div class="meta">SKU: '+esc(p.sku||'Not provided')+' · Stock: '+esc(p.stock??'Check supplier')+'</div><div class="price">'+(p.price?'$'+esc(p.price):'Price on request')+'</div><div class="pfoot"><span class="meta">Supplier listing</span><button class="smallbtn" onclick="alert(\'Product import and checkout are not enabled yet.\')">Details</button></div></div></article>').join('');
+  }catch(e){statusBox.textContent=e.message+' Add CJ_API_KEY in Vercel settings, then redeploy. Your API key is never sent to the browser.';}
+}
+document.getElementById('searchBtn').addEventListener('click',loadProducts);
+document.getElementById('keyword').addEventListener('keydown',e=>{if(e.key==='Enter')loadProducts()});
+</script>
+</body></html>
