@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>CartVanta · Payment Integration Test</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f7f6f2;color:#171717;font:15px/1.6 system-ui, sans-serif;display:grid;min-height:100vh;place-items:center;padding:20px}.panel{background:#fff;width:min(100%,520px);padding:32px;border:1px solid #e8e5df}.logo{font-weight:800;font-size:24px;letter-spacing:-1px}.logo span{font-family:Georgia,serif;font-style:italic}.tag{display:inline-block;margin-top:24px;background:#fff3cf;padding:5px 10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase}.amount{font-size:42px;font-weight:750;margin:18px 0}.muted{color:#666;font-size:13px}.btn{width:100%;border:0;background:#171717;color:#fff;padding:16px;margin-top:22px;font-weight:700;cursor:pointer}.btn:disabled{opacity:.5;cursor:wait}.notice{margin-top:18px;padding:14px;background:#f4f2ec;font-size:12px;color:#555;overflow-wrap:anywhere}.back{display:inline-block;margin-top:20px;font-size:13px}
+</style></head><body><main class="panel"><div class="logo">cart<span>vanta.</span></div><span class="tag">Test mode only</span><h1>Payment integration check</h1><p class="muted">This page creates a fixed ₹1 Razorpay test order to confirm that your Test Mode keys and server-side signature verification work.</p><div class="amount">₹1.00</div><p class="muted">No product is being purchased. This is not a customer checkout.</p><button class="btn" id="pay">Run ₹1 test payment</button><div class="notice" id="status" role="status">Ready. Use Razorpay's test payment details only.</div><a class="back" href="/">← Back to CartVanta</a></main>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+const button=document.getElementById('pay'),statusBox=document.getElementById('status');
+button.addEventListener('click',async()=>{
+ button.disabled=true;statusBox.textContent='Creating secure test order…';
+ try{
+  const orderRes=await fetch('/api/razorpay-test-order',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+  const order=await orderRes.json();if(!orderRes.ok)throw new Error(order.error||'Could not create test order.');
+  if(typeof Razorpay==='undefined')throw new Error('Razorpay Checkout could not be loaded. Please disable blockers and retry.');
+  const checkout=new Razorpay({
+   key:order.keyId,amount:order.amount,currency:order.currency,name:'CartVanta',description:'₹1 integration test only',order_id:order.orderId,
+   handler:async function(payment){
+    statusBox.textContent='Payment received by checkout. Verifying signature on server…';
+    const verifyRes=await fetch('/api/razorpay-test-verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payment)});
+    const result=await verifyRes.json();
+    if(!verifyRes.ok||!result.verified)throw new Error(result.error||'Signature verification failed.');
+    statusBox.textContent='SUCCESS — Test payment signature verified. Payment ID: '+result.paymentId+'. No customer order was created.';
+   },
+   modal:{ondismiss:function(){statusBox.textContent='Checkout closed. No verified test payment was recorded.';button.disabled=false;}},
+   theme:{color:'#171717'}
+  });
+  checkout.on('payment.failed',function(response){statusBox.textContent='Test payment failed: '+(response.error?.description||'Please retry.');button.disabled=false;});
+  checkout.open();
+ }catch(error){statusBox.textContent=error.message;button.disabled=false;}
+});
+</script></body></html>
