@@ -4,6 +4,8 @@
   <url><loc>https://cartvanta-r1fh.vercel.app/about.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://cartvanta-r1fh.vercel.app/contact.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://cartvanta-r1fh.vercel.app/faq.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://cartvanta-r1fh.vercel.app/categories.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://cartvanta-r1fh.vercel.app/feedback.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://cartvanta-r1fh.vercel.app/gift-guide-2026.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://cartvanta-r1fh.vercel.app/track-order.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://cartvanta-r1fh.vercel.app/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
