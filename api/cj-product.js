@@ -5,6 +5,7 @@ module.exports = async (req, res) => {
   const market = String(req.query.market || 'US').toUpperCase().slice(0,2);
   if (!/^[A-Z0-9-]{6,80}$/i.test(pid)) return res.status(400).json({ error: 'A valid product ID is required.' });
   if (!/^[A-Z]{2}$/.test(market)) return res.status(400).json({ error: 'Invalid destination country.' });
+  const warehouseCountry = market === 'US' ? 'US' : 'CN';
   const apiKey = process.env.CJ_API_KEY;
   if (!apiKey) return res.status(503).json({ error: 'CJ_API_KEY is not configured in Vercel.' });
   try {
@@ -14,14 +15,14 @@ module.exports = async (req, res) => {
     const authJson = await auth.json().catch(() => ({}));
     const token = authJson?.data?.accessToken;
     if (!auth.ok || authJson.code !== 200 || !token) return res.status(502).json({ error: 'CJ authentication failed.', stage: 'authentication' });
-    const url = 'https://developers.cjdropshipping.com/api2.0/v1/product/query?' + new URLSearchParams({ pid, countryCode: market, features: 'enable_video' });
+    const url = 'https://developers.cjdropshipping.com/api2.0/v1/product/query?' + new URLSearchParams({ pid, countryCode: warehouseCountry, features: 'enable_video' });
     const response = await fetch(url, { headers: { 'CJ-Access-Token': token } });
     const json = await response.json().catch(() => ({}));
     if (!response.ok || json.code !== 200 || !json.data) return res.status(404).json({ error: 'Product details are unavailable for this destination.', stage: 'product-query', cjMessage: json.message || null });
     const p = json.data;
     const variants = Array.isArray(p.variants) ? p.variants : [];
     const availableVariants = variants.map(v => {
-      const inv = Array.isArray(v.inventories) ? v.inventories.find(x => String(x.countryCode || '').toUpperCase() === market) : null;
+      const inv = Array.isArray(v.inventories) ? v.inventories.find(x => String(x.countryCode || '').toUpperCase() === warehouseCountry) : null;
       const cjStock = Number(inv?.cjInventory ?? 0);
       return {
         id: v.vid || null, sku: v.variantSku || null, name: v.variantNameEn || p.productNameEn || '',
@@ -37,7 +38,7 @@ module.exports = async (req, res) => {
         description: typeof p.description === 'string' ? p.description : '',
         category: p.categoryName || '', image: p.bigImage || images[0] || '',
         images, weightGrams: Number(p.productWeight || 0), supplierPrice: Number(p.sellPrice || 0),
-        currency: 'USD', market, variants: availableVariants,
+        currency: 'USD', market, warehouseCountry, shippingNeedsQuote: warehouseCountry !== market, variants: availableVariants,
         available: availableVariants.some(v => v.inStock),
         videoAvailable: Boolean(p.isVideo || (Array.isArray(p.videoList) && p.videoList.length))
       },
