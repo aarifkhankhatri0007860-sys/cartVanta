@@ -25,9 +25,19 @@ module.exports = async (req, res) => {
     }
 
     const market = String(req.query.market || 'US').toUpperCase() === 'CN' ? 'CN' : 'US';
-    const keyword = String(req.query.keyword || '').trim().slice(0, 100);
+    const categoryTerms = {
+      home: 'home storage organizer',
+      decor: 'home decor',
+      travel: 'travel accessories',
+      kitchen: 'kitchen tools',
+      tech: 'smart accessories',
+      fitness: 'fitness outdoor'
+    };
+    const requestedCategory = String(req.query.category || '').toLowerCase();
+    const keyword = String(req.query.keyword || categoryTerms[requestedCategory] || '').trim().slice(0, 100);
+    const page = Math.min(1000, Math.max(1, Number.parseInt(req.query.page || '1', 10) || 1));
     const params = new URLSearchParams({
-      page: '1',
+      page: String(page),
       size: '100',
       countryCode: market,
       startWarehouseInventory: '1',
@@ -67,7 +77,7 @@ module.exports = async (req, res) => {
         listedVerifiedInventory: p.totalVerifiedInventory ?? null
       }))
       .filter(p => p.id && p.sku && p.image && p.price !== null)
-      .slice(0, 24); // Bound real-time stock calls and CJ points usage.
+      .slice(0, 24); // Verify a bounded batch per page; the storefront can request subsequent pages.
 
     const verified = [];
     for (let i = 0; i < candidates.length; i += 6) {
@@ -95,7 +105,10 @@ module.exports = async (req, res) => {
     return res.status(200).json({
       products: verified,
       market,
+      category: requestedCategory || 'all',
+      requestedKeyword: keyword,
       count: verified.length,
+      hasMore: page * Number(data.pageSize || 100) < Number(data.totalRecords || 0),
       totalRecords: data.totalRecords ?? null,
       pageNumber: data.pageNumber ?? null,
       pageSize: data.pageSize ?? null,
@@ -104,7 +117,9 @@ module.exports = async (req, res) => {
         minimumCJWarehouseInventory: 1,
         realtimeSkuInventoryChecked: true,
         restrictedNameFilter: true,
-        maxStockChecksPerRequest: 24
+        maxStockChecksPerRequest: 24,
+        pageSize: 100,
+        currentPage: page
       },
       cjMessage: json.message || 'Success',
       requestId: json.requestId || null
