@@ -3,4 +3,4 @@ const $=id=>document.getElementById(id);let all=[];
 function render(){const q=$('search').value.trim().toLowerCase();const rows=all.filter(x=>(x.name+' '+x.parent+' '+x.department).toLowerCase().includes(q));const grouped={};rows.forEach(x=>(grouped[x.department]??=[]).push(x));$('groups').innerHTML=Object.entries(grouped).map(([name,list])=>'<section class="group"><h2>'+name+'</h2><div class="items">'+list.map(x=>'<a class="item" href="/?categoryId='+encodeURIComponent(x.id)+'#shop"><b>'+x.name+'</b><small>'+x.parent+' · View destination products ↗</small></a>').join('')+'</div></section>').join('')||'<div class="status">No categories match that search.</div>';$('status').textContent=rows.length+' live supplier categories shown.'}
 async function init(){try{const r=await fetch('/api/cj-categories');const d=await r.json();if(!r.ok)throw new Error(d.error||'Category service unavailable');all=d.categories||[];render()}catch(e){$('status').textContent=e.message+' Try again later or contact support.'}}
 $('search').addEventListener('input',render);init();
-</script></body></html>
+</script><script src="/analytics.js"></script></body></html>
