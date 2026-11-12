@@ -40,6 +40,7 @@ module.exports = async (req, res) => {
       page: String(page),
       size: '24',
       countryCode: market,
+      features: 'enable_category,enable_video',
       startWarehouseInventory: '1',
       verifiedWarehouse: '1'
     });
@@ -73,7 +74,6 @@ module.exports = async (req, res) => {
         name: p.nameEn || p.productNameEn || p.productName || 'CJ Product',
         sku: p.sku || p.productSku || null,
         image: p.bigImage || p.productImage || p.image || null,
-        video: p.productVideo || p.videoUrl || p.video || null,
         price: p.nowPrice ?? p.sellPrice ?? p.productPrice ?? null,
         listedVerifiedInventory: p.totalVerifiedInventory ?? null
       }))
@@ -119,7 +119,8 @@ module.exports = async (req, res) => {
         realtimeSkuInventoryChecked: true,
         restrictedNameFilter: true,
         maxStockChecksPerRequest: 24,
-        pageSize: 24,
+        apiPageSize: 24,
+        note: 'The CJ catalogue can contain many more products; this endpoint verifies one 24-item page per request to control supplier API usage.',
         currentPage: page
       },
       cjMessage: json.message || 'Success',
