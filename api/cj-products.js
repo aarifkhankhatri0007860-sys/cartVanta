@@ -73,6 +73,7 @@ module.exports = async (req, res) => {
         name: p.nameEn || p.productNameEn || p.productName || 'CJ Product',
         sku: p.sku || p.productSku || null,
         image: p.bigImage || p.productImage || p.image || null,
+        video: p.productVideo || p.videoUrl || p.video || null,
         price: p.nowPrice ?? p.sellPrice ?? p.productPrice ?? null,
         listedVerifiedInventory: p.totalVerifiedInventory ?? null
       }))
