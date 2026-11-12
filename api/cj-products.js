@@ -24,7 +24,8 @@ module.exports = async (req, res) => {
       });
     }
 
-    const market = String(req.query.market || 'US').toUpperCase() === 'CN' ? 'CN' : 'US';
+    const marketInput = String(req.query.market || 'US').toUpperCase();
+    const market = /^[A-Z]{2}$/.test(marketInput) ? marketInput : 'US';
     const categoryTerms = {
       home: 'home storage organizer',
       decor: 'home decor',
@@ -38,13 +39,19 @@ module.exports = async (req, res) => {
     const page = Math.min(1000, Math.max(1, Number.parseInt(req.query.page || '1', 10) || 1));
     const params = new URLSearchParams({
       page: String(page),
-      size: '24',
+      size: '100',
       countryCode: market,
       features: 'enable_category,enable_video',
       startWarehouseInventory: '1',
       verifiedWarehouse: '1'
     });
     if (keyword) params.set('keyWord', keyword);
+    const categoryId = String(req.query.categoryId || '').trim();
+    if (/^[A-F0-9-]{20,80}$/i.test(categoryId)) params.set('categoryId', categoryId);
+    const productFlag = String(req.query.flag || '');
+    if (['0','1','2'].includes(productFlag)) params.set('productFlag', productFlag);
+    params.set('orderBy', '4');
+    params.set('sort', 'desc');
 
     const response = await fetch(
       'https://developers.cjdropshipping.com/api2.0/v1/product/listV2?' + params.toString(),
@@ -119,8 +126,9 @@ module.exports = async (req, res) => {
         realtimeSkuInventoryChecked: true,
         restrictedNameFilter: true,
         maxStockChecksPerRequest: 24,
-        apiPageSize: 24,
-        note: 'The CJ catalogue can contain many more products; this endpoint verifies one 24-item page per request to control supplier API usage.',
+        apiPageSize: 100,
+        candidateBatchSize: 24,
+        note: 'Reads up to 100 catalogue records per page and verifies a bounded first batch of 24 product SPUs against the requested destination warehouse. Load more to scan further pages.',
         currentPage: page
       },
       cjMessage: json.message || 'Success',
