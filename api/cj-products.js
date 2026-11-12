@@ -26,6 +26,7 @@ module.exports = async (req, res) => {
 
     const marketInput = String(req.query.market || 'US').toUpperCase();
     const market = /^[A-Z]{2}$/.test(marketInput) ? marketInput : 'US';
+    const warehouseCountry = market === 'US' ? 'US' : 'CN';
     const categoryTerms = {
       home: 'home storage organizer',
       decor: 'home decor',
@@ -40,7 +41,7 @@ module.exports = async (req, res) => {
     const params = new URLSearchParams({
       page: String(page),
       size: '100',
-      countryCode: market,
+      countryCode: warehouseCountry,
       features: 'enable_category,enable_video',
       startWarehouseInventory: '1',
       verifiedWarehouse: '1'
@@ -98,11 +99,11 @@ module.exports = async (req, res) => {
           const stockJson = await stockResponse.json().catch(() => ({}));
           if (!stockResponse.ok || stockJson.code !== 200 || !Array.isArray(stockJson.data)) return null;
 
-          const warehouse = stockJson.data.find(x => String(x.countryCode || '').toUpperCase() === market);
+          const warehouse = stockJson.data.find(x => String(x.countryCode || '').toUpperCase() === warehouseCountry);
           const stock = Number(warehouse?.cjInventoryNum ?? 0);
           if (!warehouse || !Number.isFinite(stock) || stock <= 0) return null;
 
-          return { ...p, stock, currency: 'USD', warehouse: market, stockVerified: true };
+          return { ...p, stock, currency: 'USD', warehouse: warehouseCountry, destination: market, stockVerified: true, shippingNeedsQuote: warehouseCountry !== market };
         } catch (_) {
           return null;
         }
@@ -113,6 +114,8 @@ module.exports = async (req, res) => {
     return res.status(200).json({
       products: verified,
       market,
+      warehouseCountry,
+      destinationShippingQuoteRequired: warehouseCountry !== market,
       category: requestedCategory || 'all',
       requestedKeyword: keyword,
       count: verified.length,
