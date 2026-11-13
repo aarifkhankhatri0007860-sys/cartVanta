@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
     });
     if (keyword) params.set('keyWord', keyword);
     const categoryId = String(req.query.categoryId || '').trim();
-    if (/^[A-F0-9-]{20,80}$/i.test(categoryId)) params.set('categoryId', categoryId);
+    if (/^[A-Z0-9_-]{1,200}$/i.test(categoryId)) params.set('categoryId', categoryId);
     const productFlag = String(req.query.flag || '');
     if (['0','1','2'].includes(productFlag)) params.set('productFlag', productFlag);
     params.set('orderBy', '4');
