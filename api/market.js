@@ -3,5 +3,5 @@ module.exports = async (req, res) => {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
   const header = String(req.headers['x-vercel-ip-country'] || '').toUpperCase();
   const country = /^[A-Z]{2}$/.test(header) ? header : '';
-  return res.status(200).json({ country: country || 'US', detected: Boolean(country), source: country ? 'vercel-edge-country' : 'fallback' });
+  return res.status(200).json({ country: country || 'IN', detected: Boolean(country), source: country ? 'vercel-edge-country' : 'india-default' });
 };
