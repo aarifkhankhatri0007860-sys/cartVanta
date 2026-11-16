@@ -37,7 +37,7 @@ const id = () => crypto.randomUUID();
 const safe = (v, max=500) => String(v ?? '').trim().slice(0,max);
 const json = (v, fallback=[]) => { try { return JSON.parse(v || ''); } catch { return fallback; } };
 const tokenSecret = process.env.JWT_SECRET;
-if (!tokenSecret || tokenSecret.length < 32) console.warn('WARNING: Set a random JWT_SECRET of at least 32 characters.');
+if (!tokenSecret || tokenSecret.length < 32) throw new Error('Set JWT_SECRET to a random value of at least 32 characters before starting the API.');
 if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
   const email = process.env.ADMIN_EMAIL.toLowerCase().trim();
   const found = db.prepare('SELECT id FROM admins WHERE email=?').get(email);
@@ -210,10 +210,15 @@ app.get('/api/admin/dashboard',adminOnly,(req,res)=>{
   const recent=db.prepare('SELECT id,order_number,customer_name,total,payment_status,status,created_at FROM orders ORDER BY created_at DESC LIMIT 8').all();
   res.json({products,orders,lowStock,recent});
 });
-app.get('/api/admin/backup',adminOnly,(req,res)=>{
-  const data=fs.readFileSync(path.join(DB_DIR,'cartvanta.db'));
-  res.set({'Content-Type':'application/octet-stream','Content-Disposition':`attachment; filename="cartvanta-backup-${new Date().toISOString().slice(0,10)}.db"});
-  res.send(data);
+app.get('/api/admin/backup',adminOnly,async(req,res)=>{
+  const backupPath=path.join(DB_DIR,`backup-${crypto.randomUUID()}.db`);
+  try {
+    await db.backup(backupPath);
+    const data=fs.readFileSync(backupPath);
+    res.set({'Content-Type':'application/octet-stream','Content-Disposition':`attachment; filename="cartvanta-backup-${new Date().toISOString().slice(0,10)}.db"`});
+    res.send(data);
+  } catch(e) { res.status(500).json({error:'Database backup failed'}); }
+  finally { try { if(fs.existsSync(backupPath)) fs.unlinkSync(backupPath); } catch {} }
 });
 app.use((err,req,res,next)=>{
   console.error(err);
