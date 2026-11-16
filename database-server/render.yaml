@@ -2,6 +2,7 @@ services:
   - type: web
     name: cartvanta-database-api
     runtime: node
+    plan: 0.5c-512mb
     rootDir: database-server
     buildCommand: npm install
     startCommand: npm start
