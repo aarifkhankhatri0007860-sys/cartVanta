@@ -1,29 +1,31 @@
 # CartVanta
 
-CartVanta custom storefront for India and USA market exploration.
+CartVanta is a directly stocked online store. Product catalogue, categories and product images are managed through the CartVanta Admin Panel using a dedicated Firebase project.
 
 ## Deployment
 - Import this GitHub repository into Vercel.
 - Framework preset: Other.
 - Build command: leave blank.
-- Output directory: leave blank / root.
-- Add Environment Variable `CJ_API_KEY` in Vercel (never commit the key to GitHub).
-- Redeploy after adding the variable.
+- Output directory: root.
+- Configure the new CartVanta Firebase Web App in `firebase-config.js`.
+- Deploy the Firestore and Storage security rules from `firestore.rules` and `storage.rules`.
+- See [ADMIN-SETUP.md](./ADMIN-SETUP.md) for the complete setup steps.
 
-## Supplier integration
-The serverless endpoint `/api/cj-products` exchanges the server-side CJ API key for an access token and queries CJ's product catalogue. The key and access token are never sent to the browser.
+## Admin Panel
+- Open `/admin.html`.
+- Sign in with the admin user created in Firebase Authentication.
+- Add categories, products, stock, prices, descriptions and actual product photos.
+- Set a product to Published to make it visible in the storefront.
+- Manage order status and internal remarks in Orders & CRM.
 
-## Current limitations
-This initial integration is catalogue browsing only. Product importing, verified landed-cost calculations, customer accounts, inventory webhooks, payment capture, COD eligibility, order submission and fulfilment automation are not enabled. Do not accept customer payments until these flows are implemented and tested.
+## Current implementation boundaries
+The Admin Panel, product/category management, Firebase Storage photo upload, dashboard and CRM views are implemented in the repository. A new Firebase project, Web App config, admin UID and published security rules are still required before the panel can connect to live data.
 
-## Support
-fundvexxasupport@gmail.com
+Customer checkout, live Razorpay order creation/verification, COD order creation, automated stock deduction, courier integration and customer self-service order tracking are not yet connected. Do not accept real customer payments until these flows are implemented and tested end-to-end.
 
-
-## Razorpay integration test (India)
-- Add `RAZORPAY_TEST_KEY_ID` and `RAZORPAY_TEST_KEY_SECRET` in Vercel. Never commit secrets.
-- After deployment, open `/payment-test.html` to run a fixed ₹1 TEST-MODE payment.
-- The server creates the order using fixed INR 100 paise; the browser cannot set the amount.
-- The verification endpoint checks the HMAC-SHA256 signature using the test secret.
-- This is only an integration test, not a product checkout. Do not accept customer orders/payments until product pricing, shipping, taxes, order persistence, stock recheck, refunds/returns and CJ fulfilment are implemented and tested.
-- Live keys remain separate and are not used by these test endpoints.
+## Security
+- Never commit Firebase service-account credentials, Razorpay secrets or private API keys.
+- Firebase browser config is public configuration; Firestore and Storage rules enforce access.
+- Only the configured admin UID can write products/categories or read/write CRM data.
+- Keep the Firebase admin UID rules up to date and never leave the placeholder value in production.
+- Firebase free quotas are limited and usage beyond included quotas can incur charges.
