@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Sitemap: https://cartvanta-r1fh.vercel.app/sitemap.xml
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /cart.html
+Sitemap: https://cartvanta-3kfx.vercel.app/sitemap.xml
