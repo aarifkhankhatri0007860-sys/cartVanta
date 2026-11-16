@@ -1,42 +1,45 @@
-# CartVanta Admin & CRM setup
+# CartVanta — Firebase-free database deployment
 
-This repository now includes the first Admin/CRM implementation. It requires a NEW Firebase project owned by the CartVanta operator.
+CartVanta uses its own Node.js + SQLite API. Product/order/customer data and uploaded product photos are stored in one SQLite file named `cartvanta.db`.
 
-## 1. Create the Firebase project
-1. Open https://console.firebase.google.com/ and choose Add project.
-2. Project name: CartVanta (or another unique project ID).
-3. Create a Web app named CartVanta Web and copy its Firebase web configuration.
-4. Enable Authentication > Sign-in method > Email/Password.
-5. Create your own admin user in Authentication > Users. Do not enable public sign-up.
+## A. Deploy the API on Render
+1. Render → New → Web Service.
+2. Connect `aarifkhankhatri0007860-sys/cartVanta`.
+3. Root Directory: `database-server`.
+4. Build: `npm install`; Start: `npm start`.
+5. Choose a paid web service plan with persistent-disk support.
+6. Add a persistent disk mounted at `/var/data`, starting with 1 GB.
+7. Set private environment variables:
+   - `DB_DIR=/var/data`
+   - `JWT_SECRET` = random secret, minimum 32 characters
+   - `ADMIN_EMAIL` = your private admin email
+   - `ADMIN_PASSWORD` = unique password, minimum 16 characters
+   - `ALLOWED_ORIGINS` = exact CartVanta website origin
+   - `FLAT_SHIPPING=0` until shipping rules are configured
+8. Deploy. Open `https://YOUR-API.onrender.com/health`; expect `ok:true`.
+9. First boot creates the admin user from ADMIN_EMAIL and ADMIN_PASSWORD. Keep them private.
 
-## 2. Configure the website
-1. Replace the placeholders in `firebase-config.js` with the Web App config from the new project.
-2. In Firebase Console > Firestore Database, create the database in production mode.
-3. In Firebase Console > Storage, get started with the default bucket.
-4. Sign in once at `/admin.html` with your admin email and password.
-5. Copy that user's UID from Authentication > Users.
-6. Replace `REPLACE_WITH_ADMIN_FIREBASE_AUTH_UID` in BOTH `firestore.rules` and `storage.rules` with the exact UID.
-7. Publish Firestore and Storage rules in their respective Firebase Console pages. Do not leave the placeholder UID in production.
+## B. Connect website
+1. Open `database-config.js` in GitHub.
+2. Replace `https://YOUR-CARTVANTA-API.onrender.com` with the exact Render API URL (no trailing slash).
+3. Commit; Vercel redeploys.
+4. Open `/admin.html` and sign in.
+5. Add categories, products, prices, stock and photos. Publish products to show them.
 
-## 3. Vercel
-The static Admin Panel is served at `/admin.html`. Redeploy after the GitHub changes and Firebase config are committed.
+## C. Verify before launch
+- Test API health and admin login.
+- Add one test category and product with photo.
+- Verify it appears on homepage and product page.
+- Place a COD test order using your own test contact details.
+- Verify order in Admin → Orders & CRM and stock deduction.
+- Download a database backup and keep it outside GitHub.
+- Delete test data before launch.
 
-## 4. Admin features
-- Dashboard: product count, stock units, order count, paid order revenue, low-stock alerts and recent orders.
-- Categories: add/edit category and active/hidden status.
-- Products: add/edit/delete product records, multiple image uploads, SKU, category, cost, selling price, MRP, stock, tags, description and draft/published status.
-- Orders & CRM: view orders and update fulfilment status and internal remarks.
-- Customers: customer directory.
-
-## 5. Firestore data model
-- `products`: name, sku, categoryId, categoryName, cost, price, mrp, stock, images[], description, tags[], status, createdAt, updatedAt.
-- `categories`: name, slug, status, createdAt, updatedAt.
-- `orders`: orderNumber, customerName, phone, total, paymentStatus, status, adminRemark, createdAt, updatedAt.
-- `customers`: name, email, phone, orderCount, createdAt, updatedAt.
-
-## Security notes
-- Rules restrict writes and all CRM data to the single configured admin UID. Published products and active categories are public-readable.
-- Never put Firebase Admin SDK service-account credentials, Razorpay secrets, or private API keys in browser code or GitHub.
-- Do not use test payment endpoints for real orders. A separate server-side checkout implementation must recalculate prices from Firestore, recheck stock, verify Razorpay signatures/webhooks, and write orders safely before real payments are enabled.
-- Firebase web config is public client configuration; Firestore and Storage security rules provide the access control.
-- Firebase free quotas are limited and can incur charges if exceeded. Review the current Firebase billing plan and usage.
+## D. Boundaries and security
+- Firebase is not used by the new storefront, product details, categories, cart checkout or Admin Panel.
+- Only COD is enabled. Razorpay needs secure server-side order creation, signature verification and webhook reconciliation before activation.
+- Courier tracking, OTP tracking, WhatsApp automation and marketplace sync are not connected.
+- Never commit .env, database files, backups, passwords or JWT secrets.
+- Product photos are BLOBs inside SQLite; compress before upload.
+- SQLite on a persistent disk is single-instance only. Do not horizontally scale this API. Keep regular off-platform backups.
+- Render free web services have ephemeral filesystems; they are not suitable for this SQLite file. Persistent disks require a paid web service. Check current Render pricing before deployment.
