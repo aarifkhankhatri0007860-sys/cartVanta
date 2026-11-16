@@ -1,2 +1,2 @@
-// Set this to the deployed CartVanta database API URL after Render deployment.
-export const API_BASE = "https://YOUR-CARTVANTA-API.onrender.com";
+// Same-origin Vercel API. Never put database credentials in browser code.
+export const API_BASE = "";
