@@ -8,7 +8,7 @@ async function api(path,options={}){const headers={...(options.headers||{})};if(
 function note(t,type=""){const n=$("notice");n.textContent=t;n.className="notice "+type;n.classList.remove("hidden");}
 function showLogin(msg=""){ $("loginView").classList.remove("hidden");$("appView").classList.add("hidden");if(msg){$("loginMsg").textContent=msg;$("loginMsg").classList.remove("hidden")} }
 function showApp(){ $("loginView").classList.add("hidden");$("appView").classList.remove("hidden") }
-$("loginBtn").onclick=async()=>{if(!API_BASE.startsWith("https://")||API_BASE.includes("YOUR-CARTVANTA"))return showLogin("Pehle database-config.js mein deployed API URL set karein.");$("loginBtn").disabled=true;try{const d=await api("/api/auth/login",{method:"POST",body:JSON.stringify({email:$("email").value.trim(),password:$("password").value})});token=d.token;localStorage.setItem("cv_admin_token",token);showApp();await refresh()}catch(e){$("loginMsg").textContent=e.message;$("loginMsg").classList.remove("hidden")}finally{$("loginBtn").disabled=false}};
+$("loginBtn").onclick=async()=>{$("loginBtn").disabled=true;try{const d=await api("/api/auth/login",{method:"POST",body:JSON.stringify({email:$("email").value.trim(),password:$("password").value})});token=d.token;localStorage.setItem("cv_admin_token",token);showApp();await refresh()}catch(e){$("loginMsg").textContent=e.message;$("loginMsg").classList.remove("hidden")}finally{$("loginBtn").disabled=false}};
 $("logoutBtn").onclick=()=>{token="";localStorage.removeItem("cv_admin_token");showLogin()};
 $("closeModal").onclick=()=>$("modal").classList.add("hidden");
 document.querySelectorAll(".navbtn").forEach(b=>b.onclick=()=>navigate(b.dataset.page));
