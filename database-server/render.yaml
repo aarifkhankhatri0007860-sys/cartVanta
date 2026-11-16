@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: cartvanta-database-api
+    runtime: node
+    rootDir: database-server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: DB_DIR
+        value: /var/data
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+    disk:
+      name: cartvanta-sqlite-data
+      mountPath: /var/data
+      sizeGB: 1
