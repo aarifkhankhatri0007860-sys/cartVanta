@@ -67,39 +67,20 @@ function showApp() {
   $("appView").classList.remove("hidden");
 }
 
-$("forgotBtn").onclick = () => { $("forgotBox").classList.toggle("hidden"); $("forgotEmail").value = $("email").value.trim(); };
-$("sendResetBtn").onclick = async () => { const b=$("sendResetBtn"),msg=$("forgotMsg"); b.disabled=true; msg.className="notice"; msg.textContent="Sending reset link…"; msg.classList.remove("hidden"); try { const r=await fetch(API_BASE+"/api/auth/forgot-password",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:$("forgotEmail").value.trim()})}); const d=await r.json().catch(()=>({})); if(!r.ok) throw new Error(d.error||"Could not send reset link"); msg.className="notice success"; msg.textContent=d.message||"If the email is registered, a reset link will be sent."; } catch(e){msg.className="notice error";msg.textContent=e.message;} finally{b.disabled=false;} };
-const resetToken=new URLSearchParams(location.search).get("reset");
-if(resetToken){ $("forgotBox").classList.add("hidden"); $("resetBox").classList.remove("hidden"); $("loginMsg").classList.add("hidden"); }
-$("resetPasswordBtn").onclick=async()=>{const b=$("resetPasswordBtn"),msg=$("resetMsg"),pw=$("newPassword").value;if(pw.length<12||pw!==$("confirmPassword").value){msg.className="notice error";msg.textContent="Passwords must match and contain at least 12 characters.";msg.classList.remove("hidden");return;}b.disabled=true;try{const r=await fetch(API_BASE+"/api/auth/reset-password",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:resetToken,password:pw})});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Password reset failed");msg.className="notice success";msg.textContent="Password updated. You can now sign in.";msg.classList.remove("hidden");history.replaceState({},document.title,location.pathname);$("resetBox").classList.add("hidden");$("email").value=$("forgotEmail").value||$("email").value;}catch(e){msg.className="notice error";msg.textContent=e.message;msg.classList.remove("hidden");}finally{b.disabled=false;}};
-$("loginBtn").onclick = async () => {
-  const b = $("loginBtn");
-  b.disabled = true;
-
+$("quickAccessBtn").onclick = async () => {
+  const b = $("quickAccessBtn"), msg = $("loginMsg");
+  b.disabled = true; msg.className = "notice"; msg.textContent = "Opening secure dashboard…"; msg.classList.remove("hidden");
   try {
-    const d = await api("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({
-        email: $("email").value.trim(),
-        password: $("password").value
-      })
-    });
-
-    token = d.token;
-    localStorage.setItem("cv_admin_token", token);
-
-    showApp();
-    await refresh();
-
+    const r = await fetch(API_BASE + "/api/auth/quick-access", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({key:$("accessKey").value})});
+    const d = await r.json().catch(()=>({}));
+    if (!r.ok) throw new Error(d.error || "Could not open dashboard");
+    token = d.token; localStorage.setItem("cv_admin_token", token);
+    showApp(); await refresh();
   } catch (e) {
-    $("loginMsg").textContent = e.message;
-    $("loginMsg").classList.remove("hidden");
-
-  } finally {
-    b.disabled = false;
-  }
+    msg.className = "notice error"; msg.textContent = e.message;
+  } finally { b.disabled = false; }
 };
-
+$("accessKey").addEventListener("keydown", e => { if(e.key === "Enter") $("quickAccessBtn").click(); });
 $("logoutBtn").onclick = () => {
   token = "";
   localStorage.removeItem("cv_admin_token");
