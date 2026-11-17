@@ -52,7 +52,7 @@ return send(res,200,{ok:true,message:"If this is the registered admin email, an 
 if(p==="/api/auth/verify-otp"&&m==="POST"){
 const b=body(req),email=safe(b.email,254).toLowerCase(),code=safe(b.code,6),owner=safe(process.env.ADMIN_EMAIL,254).toLowerCase(),secret=process.env.JWT_SECRET;
 if(!secret||secret.length<32)return send(res,503,{error:"Admin security is not configured. Check JWT_SECRET in Vercel."});
-if(email!==owner||!/^\\d{6}$/.test(code))return send(res,401,{error:"Invalid email or OTP."});
+if(email!==owner||!/^\d{6}$/.test(code))return send(res,401,{error:"Invalid email or OTP."});
 const codeHash=crypto.createHash("sha256").update(email+":"+code+":"+secret).digest("hex");
 const q=await pool.query("SELECT * FROM admin_email_otps WHERE email=$1 AND used_at IS NULL AND expires_at>NOW() ORDER BY created_at DESC LIMIT 1",[email]);
 if(!q.rowCount)return send(res,401,{error:"OTP expired. Request a new code."});
