@@ -67,20 +67,31 @@ function showApp() {
   $("appView").classList.remove("hidden");
 }
 
-$("quickAccessBtn").onclick = async () => {
-  const b = $("quickAccessBtn"), msg = $("loginMsg");
-  b.disabled = true; msg.className = "notice"; msg.textContent = "Opening secure dashboard…"; msg.classList.remove("hidden");
-  try {
-    const r = await fetch(API_BASE + "/api/auth/quick-access", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({key:$("accessKey").value})});
-    const d = await r.json().catch(()=>({}));
-    if (!r.ok) throw new Error(d.error || "Could not open dashboard");
-    token = d.token; localStorage.setItem("cv_admin_token", token);
-    showApp(); await refresh();
-  } catch (e) {
-    msg.className = "notice error"; msg.textContent = e.message;
-  } finally { b.disabled = false; }
+let otpEmail = "";
+$("sendOtpBtn").onclick = async () => {
+  const b=$("sendOtpBtn"),msg=$("loginMsg"),email=$("adminEmail").value.trim().toLowerCase();
+  if(!email){msg.className="notice error";msg.textContent="Enter your registered admin Gmail.";msg.classList.remove("hidden");return;}
+  b.disabled=true;msg.className="notice";msg.textContent="Sending OTP…";msg.classList.remove("hidden");
+  try{
+    const r=await fetch(API_BASE+"/api/auth/send-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
+    const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Could not send OTP");
+    otpEmail=email;$("otpStep").classList.remove("hidden");msg.className="notice success";msg.textContent="OTP request processed. Check your Gmail inbox and Spam folder.";
+  }catch(e){msg.className="notice error";msg.textContent=e.message;}
+  finally{b.disabled=false;}
 };
-$("accessKey").addEventListener("keydown", e => { if(e.key === "Enter") $("quickAccessBtn").click(); });
+$("verifyOtpBtn").onclick=async()=>{
+  const b=$("verifyOtpBtn"),msg=$("loginMsg"),code=$("adminOtp").value.trim();
+  if(!otpEmail){msg.className="notice error";msg.textContent="First request an OTP.";msg.classList.remove("hidden");return;}
+  b.disabled=true;msg.className="notice";msg.textContent="Verifying OTP…";msg.classList.remove("hidden");
+  try{
+    const r=await fetch(API_BASE+"/api/auth/verify-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:otpEmail,code})});
+    const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"OTP verification failed");
+    token=d.token;localStorage.setItem("cv_admin_token",token);showApp();await refresh();
+  }catch(e){msg.className="notice error";msg.textContent=e.message;}
+  finally{b.disabled=false;}
+};
+$("adminEmail").addEventListener("keydown",e=>{if(e.key==="Enter")$("sendOtpBtn").click();});
+$("adminOtp").addEventListener("keydown",e=>{if(e.key==="Enter")$("verifyOtpBtn").click();});
 $("logoutBtn").onclick = () => {
   token = "";
   localStorage.removeItem("cv_admin_token");
