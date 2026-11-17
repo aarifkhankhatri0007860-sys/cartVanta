@@ -67,31 +67,18 @@ function showApp() {
   $("appView").classList.remove("hidden");
 }
 
-let otpEmail = "";
-$("sendOtpBtn").onclick = async () => {
-  const b=$("sendOtpBtn"),msg=$("loginMsg"),email=$("adminEmail").value.trim().toLowerCase();
-  if(!email){msg.className="notice error";msg.textContent="Enter your registered admin Gmail.";msg.classList.remove("hidden");return;}
-  b.disabled=true;msg.className="notice";msg.textContent="Sending OTP…";msg.classList.remove("hidden");
+$("loginBtn").onclick = async () => {
+  const b=$("loginBtn"),msg=$("loginMsg"),email=$("adminEmail").value.trim().toLowerCase(),password=$("adminPassword").value;
+  if(!email||!password){msg.className="notice error";msg.textContent="Enter your admin Gmail and password.";msg.classList.remove("hidden");return;}
+  b.disabled=true;msg.className="notice";msg.textContent="Signing in…";msg.classList.remove("hidden");
   try{
-    const r=await fetch(API_BASE+"/api/auth/send-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
-    const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Could not send OTP");
-    otpEmail=email;$("otpStep").classList.remove("hidden");msg.className="notice success";msg.textContent="OTP request processed. Check your Gmail inbox and Spam folder.";
-  }catch(e){msg.className="notice error";msg.textContent=e.message;}
-  finally{b.disabled=false;}
-};
-$("verifyOtpBtn").onclick=async()=>{
-  const b=$("verifyOtpBtn"),msg=$("loginMsg"),code=$("adminOtp").value.trim();
-  if(!otpEmail){msg.className="notice error";msg.textContent="First request an OTP.";msg.classList.remove("hidden");return;}
-  b.disabled=true;msg.className="notice";msg.textContent="Verifying OTP…";msg.classList.remove("hidden");
-  try{
-    const r=await fetch(API_BASE+"/api/auth/verify-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:otpEmail,code})});
-    const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"OTP verification failed");
+    const r=await fetch(API_BASE+"/api/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});
+    const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Login failed");
     token=d.token;localStorage.setItem("cv_admin_token",token);showApp();await refresh();
-  }catch(e){msg.className="notice error";msg.textContent=e.message;}
+  }catch(err){msg.className="notice error";msg.textContent=err.message;}
   finally{b.disabled=false;}
 };
-$("adminEmail").addEventListener("keydown",e=>{if(e.key==="Enter")$("sendOtpBtn").click();});
-$("adminOtp").addEventListener("keydown",e=>{if(e.key==="Enter")$("verifyOtpBtn").click();});
+$("adminPassword").addEventListener("keydown",e=>{if(e.key==="Enter")$("loginBtn").click();});
 $("logoutBtn").onclick = () => {
   token = "";
   localStorage.removeItem("cv_admin_token");
